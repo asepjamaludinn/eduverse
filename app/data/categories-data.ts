@@ -56,4 +56,20 @@ export const categoriesData: Category[] = [
     updated_at: '2024-01-14 09:45:00',
     deleted_at: null,
   },
+  {
+    category_id: 7,
+    Category_Name: 'Machine Learning',
+    slug_url: 'machine-learning',
+    created_at: '2024-01-01 12:00:00',
+    updated_at: '2024-01-10 15:30:00',
+    deleted_at: '2024-01-28 09:15:00',
+  },
+  {
+    category_id: 8,
+    Category_Name: 'Cloud Computing',
+    slug_url: 'cloud-computing',
+    created_at: '2023-12-28 10:15:00',
+    updated_at: '2024-01-05 11:20:00',
+    deleted_at: null,
+  },
 ]
