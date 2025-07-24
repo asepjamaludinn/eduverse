@@ -18,8 +18,7 @@ export class ThemeUtils {
     try {
       const stored = localStorage.getItem(storageKey)
       return stored && this.isValidTheme(stored) ? stored : null
-    } catch (error) {
-      console.warn('Failed to read theme from localStorage:', error)
+    } catch {
       return null
     }
   }
@@ -29,9 +28,7 @@ export class ThemeUtils {
 
     try {
       localStorage.setItem(storageKey, theme)
-    } catch (error) {
-      console.warn('Failed to save theme to localStorage:', error)
-    }
+    } catch {}
   }
 
   static applyTheme(theme: Theme, attribute = 'class'): void {

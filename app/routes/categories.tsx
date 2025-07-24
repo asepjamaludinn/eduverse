@@ -1,4 +1,5 @@
 import type { Route } from './+types/categories'
+
 import { CategoriesTable } from '@/components/categories-table'
 import { categoriesData } from '@/data/categories-data'
 

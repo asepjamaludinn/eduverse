@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+
 import type {
   Theme,
   ThemeContextType,
@@ -22,7 +23,6 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [theme, setThemeState] = React.useState<Theme>(defaultTheme)
 
-  // Initialize theme from storage or default
   React.useEffect(() => {
     const storedTheme = ThemeUtils.getStoredTheme(storageKey)
     if (storedTheme) {
@@ -30,7 +30,6 @@ export function ThemeProvider({
     }
   }, [storageKey])
 
-  // Apply theme to document
   React.useEffect(() => {
     ThemeUtils.applyTheme(theme, attribute)
   }, [theme, attribute])
@@ -48,7 +47,6 @@ export function ThemeProvider({
     setTheme(newTheme)
   }, [theme, setTheme])
 
-  // Handle keyboard shortcuts
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'T') {

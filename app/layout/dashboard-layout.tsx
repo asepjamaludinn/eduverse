@@ -8,6 +8,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/common/sidebar/app-sidebar'
 import DashboardNavbar from '@/components/common/navbar/dashboard-navbar'
 import { ThemeProvider } from '@/contexts/theme-context'
+import { Toaster } from '@/components/ui/toaster'
 
 export function DashbboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,10 +27,11 @@ export function DashbboardLayout({ children }: { children: React.ReactNode }) {
         >
           <SidebarProvider>
             <AppSidebar />
-            <SidebarInset>
+            <SidebarInset className="overflow-x-hidden">
               <DashboardNavbar />
               <div className="flex flex-1 flex-col gap-4 p-2 sm:p-4 pt-0">
                 {children}
+                <Toaster />
                 <ScrollRestoration />
                 <Scripts />
               </div>

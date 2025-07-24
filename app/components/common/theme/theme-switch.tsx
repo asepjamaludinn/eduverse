@@ -1,10 +1,11 @@
 'use client'
 import { Moon, Sun } from 'lucide-react'
+
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { useTheme } from '@/contexts/theme-context'
 
 export function ThemeSwitch() {
-  const { theme, toggleTheme } = useTheme()
+  const { toggleTheme } = useTheme()
 
   return (
     <DropdownMenuItem className="cursor-pointer" onClick={toggleTheme}>

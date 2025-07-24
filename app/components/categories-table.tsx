@@ -13,7 +13,15 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ArrowUpDown, ChevronDown, MoreHorizontal, Plus } from 'lucide-react'
+import {
+  ArrowUpDown,
+  ChevronDown,
+  MoreHorizontal,
+  Plus,
+  Copy,
+  SquarePen,
+  Trash,
+} from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -38,6 +46,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { useIsMobile } from '@/hooks/use-mobile'
 import type { Category } from '@/data/categories-data'
+import { toast } from '@/hooks/use-toast'
 
 const columns: ColumnDef<Category>[] = [
   {
@@ -200,7 +209,18 @@ const columns: ColumnDef<Category>[] = [
       const deletedAt = row.getValue(id) as string | null
       if (value === 'active') return !deletedAt
       if (value === 'deleted') return !!deletedAt
-      return true // for "all" or any other value
+      return true
+    },
+    sortingFn: (rowA, rowB, columnId) => {
+      const statusA = rowA.getValue(columnId) as string | null
+      const statusB = rowB.getValue(columnId) as string | null
+
+      const isActiveA = !statusA
+      const isActiveB = !statusB
+
+      if (isActiveA && !isActiveB) return -1
+      if (!isActiveA && isActiveB) return 1
+      return 0
     },
     size: 80,
   },
@@ -221,18 +241,28 @@ const columns: ColumnDef<Category>[] = [
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() =>
+              onClick={() => {
                 navigator.clipboard.writeText(category.category_id.toString())
-              }
+                toast({
+                  title: 'Category ID Copied!',
+                  description: `Category ID ${category.category_id} has been copied to clipboard.`,
+                  variant: 'success',
+                })
+              }}
             >
+              <Copy className="mr-2 h-4 w-4" />
               Copy category ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit category</DropdownMenuItem>
+            <DropdownMenuItem>
+              <SquarePen className="mr-2 h-4 w-4" />
+              Edit category
+            </DropdownMenuItem>
             {category.deleted_at ? (
               <DropdownMenuItem>Restore category</DropdownMenuItem>
             ) : (
               <DropdownMenuItem className="text-destructive">
+                <Trash className="mr-2 h-4 w-4" />
                 Delete category
               </DropdownMenuItem>
             )}
@@ -277,7 +307,6 @@ export function CategoriesTable({ data }: CategoriesTableProps) {
     },
   })
 
-  // Auto-hide less important columns on mobile
   React.useEffect(() => {
     if (isMobile) {
       setColumnVisibility({
@@ -387,7 +416,8 @@ export function CategoriesTable({ data }: CategoriesTableProps) {
 
       <div className="rounded-md border overflow-hidden">
         <div className="overflow-x-auto">
-          <Table>
+          <Table className="min-w-max">
+            {' '}
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id} className="hover:bg-transparent">

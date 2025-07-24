@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Command } from 'lucide-react'
 import { Link } from 'react-router'
-
 import { NavMain } from '@/components/common/sidebar/items/nav-main'
 import { NavUser } from '@/components/common/sidebar/items/nav-user'
 import {
